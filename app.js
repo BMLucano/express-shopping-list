@@ -11,7 +11,7 @@ app.use(express.json());
 
 app.use(morgan('dev'));
 
-app.use("/items", itemRoutes)
+app.use("/items", itemRoutes);
 
 
 /** 404 handler: matches unmatched routes; raises NotFoundError. */

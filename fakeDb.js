@@ -1,4 +1,8 @@
-const items = [{ name: "popsicle", price: 1.45 },
-{ name: "cheerios", price: 3.40 }];
+"use strict";
+
+const items = [
+  { name: "popsicle", price: 1.45 },
+  { name: "cheerios", price: 3.40 }
+];
 
 module.exports = { items };
