@@ -3,7 +3,7 @@
 const express = require("express");
 
 const db = require("./fakeDb");
-const { BadRequestError } = require("./expressError");
+const { BadRequestError, NotFoundError } = require("./expressError");
 const router = new express.Router();
 
 /** GET /items: returns list of shopping items */
@@ -43,6 +43,11 @@ router.get("/:name", function (req, res){
     };
   };
 
+  if (item === undefined){
+    throw new NotFoundError("Item not found");
+  };
+
+
   return res.json(item);
 });
 
@@ -63,6 +68,10 @@ router.patch("/:name", function (req, res){
     };
   };
 
+  if (updatedItem === undefined){
+    throw new NotFoundError("Item not found");
+  };
+
   console.log (`PATCH request completed: ${itemName} is now ${updatedItem}`);
 
   return res.json({updated: updatedItem});
@@ -80,10 +89,18 @@ router.delete("/:name", function (req, res){
 
   // Loops over db.items, finds the desired item obj within the list and
   // removes desired item from the items list
+
+  let deletedItem;
+
   for (let i = 0; i < db.items.length; i++) {
     if (db.items[i].name === itemName){
+      deletedItem = db.items[i];
       db.items.splice(i, 1);
     };
+  };
+
+  if (deletedItem === undefined){
+    throw new NotFoundError("Item not found");
   };
 
   console.log("New items list =", db.items);
