@@ -51,6 +51,11 @@ describe("POST /items", function () {
       })
       expect(db.items.length).toEqual(3);
   });
+
+  test("Responds with 400 if empty name", async function() {
+    const resp = await request(app).post(`/items`);
+    expect(resp.statusCode).toEqual(400);
+  });
 });
 
 
@@ -67,6 +72,7 @@ describe("GET /items/:name", function () {
 
   test("Responds with 404 if name invalid", async function() {
     const resp = await request(app).get(`/items/not-here`);
+
     expect(resp.statusCode).toEqual(404);
   });
 });
