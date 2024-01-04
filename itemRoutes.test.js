@@ -44,15 +44,15 @@ describe("POST /items", function () {
         name: "chips",
         price: 2.99
       });
-      //FIXME:200 vs 201 code
-      expect(resp.statusCode).toEqual(201);
+
+      expect(resp.statusCode).toEqual(200);
       expect(resp.body).toEqual({
         added: {name: "chips", price: 2.99}
       })
       expect(db.items.length).toEqual(3);
   });
 
-  test("Responds with 400 if empty name", async function() {
+  test("Responds with 400 if empty body", async function() {
     const resp = await request(app).post(`/items`);
     expect(resp.statusCode).toEqual(400);
   });
@@ -92,11 +92,12 @@ describe("PATCH /items", function () {
         name: newItemName,
         price: newItemPrice
       });
-      //FIXME: Same Error (200 vs 201)
-      expect(resp.statusCode).toEqual(201);
+
+      expect(resp.statusCode).toEqual(200);
       expect(resp.body).toEqual({
         updated: {name: newItemName, price: newItemPrice}
       })
+      //can hard code "popsicle" and price
       expect(resp.body).not.toEqual({
         updated: {name: testItem1.name, price: testItem1.price}
       })
@@ -118,6 +119,7 @@ describe("DELETE /items/:name", function() {
       .delete(`/items/${testItem1.name}`);
     expect(resp.body).toEqual({ message: "Deleted" });
     expect(db.items.length).toEqual(1);
+    //redundant
     expect(db.items.length).not.toEqual(2);
   });
 

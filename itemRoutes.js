@@ -47,7 +47,7 @@ router.get("/:name", function (req, res){
 });
 
 /** PATCH /items/:name: accept JSON body, modify item, return it: */
-
+//patch only updates part of the item--we are doing PUT
 router.patch("/:name", function (req, res){
   const itemName = req.params.name;
   console.log (`PATCH request for ${itemName} reached`);
